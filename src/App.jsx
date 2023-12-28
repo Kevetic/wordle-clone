@@ -11,6 +11,7 @@ function App() {
   const [input, setInput] = useState("");
   const [answer, setAnswer] = useState(Word[randomWrd].toUpperCase());
   const [matches, setMatches] = useState();
+  const [correctGuess, setCorrectGuess] = useState();
   console.log(answer);
 
   const answerMap = () => {
@@ -40,19 +41,20 @@ function App() {
     }
 
     let splitedGuess = guess.split("");
-    splitedGuess.map((x) => {
+    splitedGuess.map((x, idx) => {
       let matchValues = Array.from(matches.values());
-      let matchKeys = Array.from(matches.keys());
-      console.log("here:", matchValues);
       if (matchValues.includes(x)) {
-        console.log("it has:", x);
+        const correctPosition = matchValues.indexOf(x) === idx;
+        if (correctPosition) {
+          setCorrectGuess(idx);
+        }
       }
       console.log("didnt run:", x);
     });
   };
   return (
     <div className="flex justify-center items-center h-screen w-screen flex-col">
-      <Board guesses={guesses} />
+      <Board guesses={guesses} correctGuess={correctGuess} />
       <div>{count}</div>
       <Guesses handleClick={handleClick} input={input} setInput={setInput} />
     </div>
