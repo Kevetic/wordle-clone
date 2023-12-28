@@ -5,35 +5,50 @@ import Guesses from "./components/Guesses/Guesses";
 import { Word } from "./components/Words/Words";
 
 function App() {
-  let randomWrd = Math.floor(Math.random(Word) * Word.length);
+  let randomWrd = Math.floor(Math.random() * Word.length);
   const [count, setCount] = useState(0);
   const [guesses, setGuesses] = useState([]);
   const [input, setInput] = useState("");
   const [answer, setAnswer] = useState(Word[randomWrd].toUpperCase());
+  const [matches, setMatches] = useState();
+  console.log(answer);
+
+  const answerMap = () => {
+    let map = new Map();
+    let splited = answer.split("");
+
+    splited.map((x, id) => map.set(id, x));
+    setMatches(map);
+  };
+
+  console.log("matches:", matches);
+  // console.log("guesses:", guesses);
 
   const [answerArr, setAnswerArr] = useState([]);
 
   useEffect(() => {
+    answerMap();
     setInput("");
   }, [guesses]);
 
   const handleClick = (guess) => {
-    console.log("answer:", answer);
-    let answerSplit = answer.split("");
-    setAnswerArr(answerSplit.map((l) => l));
-    console.log("this should be map:", answerArr);
     if (guess.length != 5 && count != 5) {
       alert("has to be 5 letters");
     } else if (count != 5) {
-      // let guessSplit = guess.split("");
-      // let guessMap = guessSplit.map((match) => match);
-      // let correctLetter = answerMap.filter((item, idx) =>
-      //   guessMap.includes(item, idx)
-      // );
-      // console.log(correctLetter);
       setGuesses([...guesses, guess]);
       setCount((count) => count + 1);
     }
+
+    let splitedGuess = guess.split("");
+    splitedGuess.map((x) => {
+      let matchValues = Array.from(matches.values());
+      let matchKeys = Array.from(matches.keys());
+      console.log("here:", matchValues);
+      if (matchValues.includes(x)) {
+        console.log("it has:", x);
+      }
+      console.log("didnt run:", x);
+    });
   };
   return (
     <div className="flex justify-center items-center h-screen w-screen flex-col">
