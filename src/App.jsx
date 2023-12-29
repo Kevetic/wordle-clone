@@ -12,9 +12,10 @@ function App() {
   const [answer, setAnswer] = useState(Word[randomWrd].toUpperCase());
   const [matches, setMatches] = useState();
   const [correctGuess, setCorrectGuess] = useState();
-  console.log(answer);
+  console.log(correctGuess);
 
   const answerMap = () => {
+    console.log(answer);
     let map = new Map();
     let splited = answer.split("");
 
@@ -22,7 +23,7 @@ function App() {
     setMatches(map);
   };
 
-  console.log("matches:", matches);
+  // console.log("matches:", matches);
   // console.log("guesses:", guesses);
 
   const [answerArr, setAnswerArr] = useState([]);
@@ -46,7 +47,7 @@ function App() {
       if (matchValues.includes(x)) {
         const correctPosition = matchValues.indexOf(x) === idx;
         if (correctPosition) {
-          setCorrectGuess(idx);
+          setCorrectGuess({ letters: x, id: idx });
         }
       }
       console.log("didnt run:", x);
