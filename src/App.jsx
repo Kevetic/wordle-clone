@@ -12,6 +12,7 @@ function App() {
   const [answer, setAnswer] = useState(Word[randomWrd].toUpperCase());
   const [matches, setMatches] = useState();
   const [correctGuess, setCorrectGuess] = useState();
+  const [currentGuess, setCurrentGuess] = useState("");
   console.log(correctGuess);
 
   const answerMap = () => {
@@ -34,6 +35,7 @@ function App() {
   }, [guesses]);
 
   const handleClick = (guess) => {
+    setCurrentGuess(guess);
     if (guess.length != 5 && count != 5) {
       alert("has to be 5 letters");
     } else if (count != 5) {
@@ -55,7 +57,12 @@ function App() {
   };
   return (
     <div className="flex justify-center items-center h-screen w-screen flex-col">
-      <Board guesses={guesses} correctGuess={correctGuess} />
+      <Board
+        guesses={guesses}
+        correctGuess={correctGuess}
+        answer={answer}
+        currentGuess={currentGuess}
+      />
       <div>{count}</div>
       <Guesses handleClick={handleClick} input={input} setInput={setInput} />
     </div>
