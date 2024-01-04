@@ -6,9 +6,6 @@ export default function Board({ guesses, correctGuess, answer, currentGuess }) {
     Array.from({ length: 5 }, () => Array(5).fill(""))
   );
 
-  // console.log("board:", board);
-  // console.log(guesses);
-
   useEffect(() => {
     if (correctGuess) {
       keepCorrect();
